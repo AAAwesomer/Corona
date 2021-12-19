@@ -15,7 +15,7 @@ export interface InputControllerProps {
 
 const InputController: React.FC<InputControllerProps> = ({ handleChange }) => {
   return (
-    <div className="input-controller">
+    <div className="input-controller card">
       <div className="controller-container">
         <InputSection
           config={appConfig.inputSections[0]}

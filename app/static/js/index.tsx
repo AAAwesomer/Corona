@@ -10,6 +10,7 @@ import DocumentTitle from 'react-document-title';
 import { BrowserHistory } from 'utils/navigationUtils';
 import NotFoundPage from './pages/NotFoundPage';
 import HomePage from 'pages/HomePage';
+import CountryPage from 'pages/CountryPage';
 
 ReactDOM.render(
   <DocumentTitle title="Corona AI">
@@ -18,6 +19,7 @@ ReactDOM.render(
       <div id="main">
         {/* Page component */}
         <Switch>
+          <Route path="/countries/:id" component={CountryPage} />
           <Route exact path="/" component={HomePage} />
           <Route component={NotFoundPage} />
         </Switch>
