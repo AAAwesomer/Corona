@@ -7,10 +7,12 @@ import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Router, Route, Switch } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
-import { BrowserHistory } from 'utils/navigationUtils';
 import NotFoundPage from './pages/NotFoundPage';
 import HomePage from 'pages/HomePage';
 import CountryPage from 'pages/CountryPage';
+import { createBrowserHistory } from 'history';
+
+export const BrowserHistory = createBrowserHistory();
 
 ReactDOM.render(
   <DocumentTitle title="Corona AI">
