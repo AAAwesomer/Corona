@@ -1,0 +1,58 @@
+@import 'variables';
+
+.input-controller {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  background: white;
+  border: none;
+  border-radius: $spacer-2;
+  padding: 0px $spacer-2;
+  box-shadow: 0px 2px 2px 0px $color-shadow;
+
+  .controller-container {
+    padding: $spacer-2;
+    width: 50%;
+
+    &.help-section {
+      flex: 1;
+    }
+
+    .input-section {
+      padding: $spacer-2 0px;
+
+      .model-input {
+        padding: $spacer-1 0px;
+        border-radius: $box-rounding;
+        border: none;
+
+        .description {
+          margin: 8px 0px;
+        }
+
+        input {
+          padding: 4px 0px;
+        }
+
+        .value-info {
+          display: flex;
+
+          div {
+            margin-left: 4px;
+
+            &.value {
+              margin-left: 0px;
+              flex-shrink: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.split-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
