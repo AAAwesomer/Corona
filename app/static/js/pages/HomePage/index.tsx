@@ -27,8 +27,6 @@ const HomePage: React.FC<any> = () => {
     setInputs({ ...inputs, [inputId]: value });
   };
 
-  console.log(inputs);
-
   return (
     <main className="page-row">
       <InputController handleChange={handleInputChange} />
