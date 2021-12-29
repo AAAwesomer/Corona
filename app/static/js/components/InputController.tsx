@@ -5,10 +5,6 @@ import React from 'react';
 import appConfig from 'config/config';
 import InputSection from './InputSection';
 
-export interface InputValues {
-  [input: string]: number;
-}
-
 export interface InputControllerProps {
   handleChange: (inputId: string, value: number) => void;
 }

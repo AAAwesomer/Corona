@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { InputConfig } from 'config/types';
+import { getCodingsKeys } from 'lib/inputs';
 
 export interface InputProps {
   config: InputConfig;
@@ -10,9 +11,9 @@ export interface InputProps {
 }
 
 const ModelInput: React.FC<InputProps> = ({ config, handleChange }) => {
-  const codings = Object.keys(config.coding).map((i) => parseInt(i));
-  const min = Math.min(...codings);
-  const max = Math.max(...codings);
+  const codingsKeys = getCodingsKeys(config);
+  const min = Math.min(...codingsKeys);
+  const max = Math.max(...codingsKeys);
 
   const [value, setValue] = useState(min);
 
