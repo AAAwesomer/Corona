@@ -1,0 +1,32 @@
+.country-details {
+  display: flex;
+  flex-direction: column;
+  padding: $spacer-4;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: $spacer-4;
+
+    .date {
+      color: $color-font-primary-light;
+    }
+  }
+
+  .statistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .statistic {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .value {
+        font-size: $spacer-5;
+      }
+    }
+  }
+}

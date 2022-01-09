@@ -11,7 +11,7 @@ from flask import Flask, Blueprint
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.api import init_routes
-from app.api.v0 import blueprint
+from app.api.countries.v0 import countries_bp
 
 PROJECT_ROOT = os.getenv('PROJECT_ROOT', os.path.dirname(os.path.abspath(__file__)))
 static_dir = os.path.join(PROJECT_ROOT, 'static')
@@ -40,10 +40,7 @@ def create_app(config_module_class: str, template_folder: str = None) -> Flask:
     logging.info('Created app with config name {}'.format(config_module_class))
     logging.info('Using search service at {}'.format(app.config.get('SEARCHSERVICE_BASE')))
 
-    api_bp = Blueprint('api', __name__)
-
-    app.register_blueprint(blueprint)
-    app.register_blueprint(api_bp)
+    app.register_blueprint(countries_bp)
     init_routes(app)
 
     init_custom_routes = app.config.get('INIT_CUSTOM_ROUTES')

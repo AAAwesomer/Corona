@@ -11,6 +11,8 @@ services:
       - 1919:1919
     networks:
       - corona
+    env_file:
+      - .env
 
 networks:
   corona:

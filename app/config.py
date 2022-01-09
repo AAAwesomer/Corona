@@ -2,13 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import os
-import distutils.util
-from typing import Callable, Dict, List, Optional, Set  # noqa: F401
-from app.models.user import User
-
-from flask import Flask  # noqa: F401
-
-from app.tests.test_utils import get_test_user
+from typing import Dict, List, Set  # noqa: F401
 
 
 class MatchRuleObject:
@@ -46,56 +40,6 @@ class Config:
     # Frontend Application
     FRONTEND_BASE = ''
 
-    # Mail Client Features
-    MAIL_CLIENT = None
-    NOTIFICATIONS_ENABLED = False
-
-    # Initialize custom routes
-    INIT_CUSTOM_ROUTES = None  # type: Callable[[Flask], None]
-
-    # Settings for Issue tracker integration
-    ISSUE_LABELS = []  # type: List[str]
-    ISSUE_TRACKER_API_TOKEN = None  # type: str
-    ISSUE_TRACKER_URL = None  # type: str
-    ISSUE_TRACKER_USER = None  # type: str
-    ISSUE_TRACKER_PASSWORD = None  # type: str
-    ISSUE_TRACKER_PROJECT_ID = None  # type: int
-    # Maps to a class path and name
-    ISSUE_TRACKER_CLIENT = None  # type: str
-    ISSUE_TRACKER_CLIENT_ENABLED = False  # type: bool
-    # Max issues to display at a time
-    ISSUE_TRACKER_MAX_RESULTS = None  # type: int
-
-    # Programmatic Description configuration. Please see docs/flask_config.md
-    PROGRAMMATIC_DISPLAY = None  # type: Optional[Dict]
-
-    # If specified, will be used to generate headers for service-to-service communication
-    # Please note that if specified, this will ignore following config properties:
-    # 1. METADATASERVICE_REQUEST_HEADERS
-    # 2. SEARCHSERVICE_REQUEST_HEADERS
-    REQUEST_HEADERS_METHOD: Optional[Callable[[Flask], Optional[Dict]]] = None
-
-    AUTH_USER_METHOD: Optional[Callable[[Flask], User]] = None
-    GET_PROFILE_URL = None
-
-    CREDENTIALS_MODE_ADMIN_TOKEN = os.getenv('CREDENTIALS_MODE_ADMIN_TOKEN', None)
-    CREDENTIALS_MODE_ADMIN_PASSWORD = os.getenv('CREDENTIALS_MODE_ADMIN_PASSWORD', None)
-    MODE_ORGANIZATION = None
-    MODE_REPORT_URL_TEMPLATE = None
-    # Add Preview class name below to enable ACL, assuming it is supported by the Preview class
-    # e.g: ACL_ENABLED_DASHBOARD_PREVIEW = {'ModePreview'}
-    ACL_ENABLED_DASHBOARD_PREVIEW = set()  # type: Set[Optional[str]]
-
-    MTLS_CLIENT_CERT = os.getenv('MTLS_CLIENT_CERT')
-    """
-    Optional.
-    The path to a PEM formatted certificate to present when calling the metadata and search services.
-    MTLS_CLIENT_KEY must also be set.
-    """
-
-    MTLS_CLIENT_KEY = os.getenv('MTLS_CLIENT_KEY')
-    """Optional. The path to a PEM formatted key to use with the MTLS_CLIENT_CERT. MTLS_CLIENT_CERT must also be set."""
-
 
 class LocalConfig(Config):
     DEBUG = False
@@ -111,3 +55,9 @@ class LocalConfig(Config):
                                    'http://{LOCAL_HOST}:{PORT}'.format(
                                        LOCAL_HOST=LOCAL_HOST,
                                        PORT=FRONTEND_PORT))
+
+    MYSQL_HOST=os.environ.get('MYSQL_HOST')
+    MYSQL_PORT=int(os.environ.get('MYSQL_PORT', 3306))
+    MYSQL_USER=os.environ.get('MYSQL_USER')
+    MYSQL_PASSWORD=os.environ.get('MYSQL_PASSWORD')
+    MYSQL_DB=os.environ.get('MYSQL_DB')

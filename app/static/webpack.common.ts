@@ -23,12 +23,13 @@ const FONT_PATTERN = /\.(ttf|woff2|otf)$/;
 const RESOLVED_EXTENSIONS = ['.tsx', '.ts', '.js', '.jsx', '.css', '.scss'];
 
 const PATHS = {
-  dist: resolve('/dist'),
-  pages: resolve('/js/pages'),
   components: resolve('/js/components'),
   config: resolve('/js/config'),
+  dist: resolve('/dist'),
   ducks: resolve('/js/ducks'),
+  lib: resolve('/js/lib'),
   interfaces: resolve('/js/interfaces'),
+  pages: resolve('/js/pages'),
   providers: resolve('/js/providers'),
   utils: resolve('/js/utils'),
   css: resolve('/css/'),
@@ -68,6 +69,7 @@ const config: webpack.Configuration = {
       components: PATHS.components,
       config: PATHS.config,
       ducks: PATHS.ducks,
+      lib: PATHS.lib,
       interfaces: PATHS.interfaces,
       providers: PATHS.providers,
       utils: PATHS.utils,
