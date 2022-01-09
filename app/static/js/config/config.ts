@@ -1,12 +1,12 @@
 import { AppConfig } from './types';
 
 const appConfig: AppConfig = {
-  inputSections: [
+  restrictionSections: [
     {
       name: 'Containment and closure policies',
-      inputs: [
+      restrictions: [
         {
-          id: 'C1_School closing',
+          id: 'c1_school_closing',
           name: 'School closing',
           description: 'Closings of schools and universities',
           measurement: 'Ordinal scale',
@@ -18,7 +18,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C2_Workplace closing',
+          id: 'c2_workplace_closing',
           name: 'Workplace closing',
           description: 'Closings of workplaces',
           measurement: 'Ordinal scale',
@@ -30,7 +30,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C3_Cancel public events',
+          id: 'c3_cancel_public_events',
           name: 'Cancel public events',
           description: 'Cancelling public events',
           measurement: 'Ordinal scale',
@@ -41,7 +41,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C4_Restrictions on gatherings',
+          id: 'c4_restrictions_on_gatherings',
           name: 'Restrictions on gatherings',
           description: 'Limits on gatherings',
           measurement: 'Ordinal scale',
@@ -54,7 +54,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C5_Close public transport',
+          id: 'c5_close_public_transport',
           name: 'Close public transport',
           description: 'Closing of public transport',
           measurement: 'Ordinal scale',
@@ -65,7 +65,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C6_Stay at home requirements',
+          id: 'c6_stay_at_home_requirements',
           name: 'Stay at home requirements',
           description:
             'Orders to "shelter-in-place" and otherwise confine to the home',
@@ -78,7 +78,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C7_Restrictions on internal movement',
+          id: 'c7_restrictions_on_internal_movement',
           name: 'Restrictions on internal movement',
           description:
             'Restrictions on internal movement between cities/regions',
@@ -90,7 +90,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'C8_International travel controls',
+          id: 'c8_international_travel_controls',
           name: 'International travel controls',
           description:
             'Restrictions on international travel. Note: accounts for foreign travellers, not citizens',
@@ -107,9 +107,9 @@ const appConfig: AppConfig = {
     },
     {
       name: 'Economic policies',
-      inputs: [
+      restrictions: [
         {
-          id: 'E1_Income support <br/>(for households)',
+          id: 'e1_income_support',
           name: 'Income support (for households)',
           description:
             'Whether the government is providing direct cash payments to people who lose their jobs or cannot work.',
@@ -121,7 +121,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'E2_Debt/contract relief <br/>(for households)',
+          id: 'e2_debt_contract_relief',
           name: 'Debt/contract relief (for households)',
           description:
             'Whether the government is freezing financial obligations for households (eg stopping loan repayments, preventing services like water from stopping, or banning evictions)',
@@ -136,9 +136,9 @@ const appConfig: AppConfig = {
     },
     {
       name: 'Health system policies',
-      inputs: [
+      restrictions: [
         {
-          id: 'H1_Public information campaigns',
+          id: 'h1_public_information_campaigns',
           name: 'Public information campaigns',
           description: 'Presence of public info campaigns',
           measurement: 'Ordinal scale',
@@ -149,7 +149,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'H2_Testing policy',
+          id: 'h2_testing_policy',
           name: 'Testing policy',
           description:
             'Government policy on who has access to testing. Note: Does not cover testing for immunity (antibody test)',
@@ -162,7 +162,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'H3_Contact tracing',
+          id: 'h3_contact_tracing',
           name: 'Contact tracing',
           description:
             'Government policy on contact tracing after a positive diagnosis. Note: we are looking for policies that would identify all people potentially exposed to Covid-19; voluntary bluetooth apps are unlikely to achieve this',
@@ -174,7 +174,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'H6_Facial Coverings',
+          id: 'h6_facial_coverings',
           name: 'Facial Coverings',
           description:
             'Policies on the use of facial coverings outside the home',
@@ -188,7 +188,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'H7_Vaccination Policy',
+          id: 'h7_vaccination_policy',
           name: 'Vaccination Policy',
           description:
             'Policies for vaccine delivery for different groups',
@@ -203,7 +203,7 @@ const appConfig: AppConfig = {
           },
         },
         {
-          id: 'H8_Protection of elderly people',
+          id: 'h8_protection_of_elderly_people',
           name: 'Protection of elderly people',
           description:
             'Policies for protecting elderly people (as defined locally) in Long Term Care Facilities and/or the community and home setting',

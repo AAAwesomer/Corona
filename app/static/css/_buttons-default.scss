@@ -190,9 +190,9 @@
   padding: 0px $spacer-2;
 
   &.cancel {
-    color: $color-searchbar-font;
+    color: $color-font-gray;
     background: transparent;
-    border: 1px solid $color-searchbar-font;
+    border: 1px solid $color-font-gray;
 
     &:hover {
       color: white;
@@ -262,9 +262,9 @@
 }
 
 .btn-tab {
-  color: $color-searchbar-font;
+  color: $color-font-gray;
   font-size: 14px;
-  border: 1px solid $color-searchbar-font;
+  border: 1px solid $color-font-gray;
   border-radius: $box-rounding-sharp;
   background: transparent;
   font-weight: $font-weight-body-bold;

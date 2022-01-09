@@ -29,34 +29,34 @@ Don't do this:
 // Coffee
 $coffee100: #161215;
 $coffee60: #433740;
-$coffee40: #B6A5B1;
-$coffee20: #E3DDE0;
-$coffee0: #F6F4F5;
+$coffee40: #b6a5b1;
+$coffee20: #e3dde0;
+$coffee0: #f6f4f5;
 
 // Mango
-$mango100: #FF7F3F;
-$mango60: #FFAD85;
-$mango40: #FFD6C2;
-$mango0: #FFF1EB;
+$mango100: #ff7f3f;
+$mango60: #ffad85;
+$mango40: #ffd6c2;
+$mango0: #fff1eb;
 
 // Pink
-$pink100: #FF1468;
-$pink60: #FF5C95;
-$pink40: #FFD6E4;
-$pink0: #FFEBF2;
+$pink100: #ff1468;
+$pink60: #ff5c95;
+$pink40: #ffd6e4;
+$pink0: #ffebf2;
 
 // Seaweed
 $seaweed100: #028090;
-$seaweed60: #03C4DD;
-$seaweed40: #9BF2FD;
-$seaweed0: #D7FAFE;
+$seaweed60: #03c4dd;
+$seaweed40: #9bf2fd;
+$seaweed0: #d7fafe;
 
 // Persian indigo:
-$indigo20: #D4CEDF;
-$indigo40: #A89CBF;
-$indigo60: #7D6B9E;
-$indigo80: #51397E;
-$indigo100: #26085E;
+$indigo20: #d4cedf;
+$indigo40: #a89cbf;
+$indigo60: #7d6b9e;
+$indigo80: #51397e;
+$indigo100: #26085e;
 
 // Theme
 $color-font-primary: $coffee100;
@@ -67,7 +67,7 @@ $color-font-quaternary: $indigo100;
 
 $color-navbar: $coffee100;
 $color-searchbar-background: $coffee60;
-$color-searchbar-font: $coffee40;
+$color-font-gray: $coffee40;
 
 $color-bg: $coffee0;
 $color-bg-dark: $coffee20;
@@ -80,7 +80,6 @@ $color-bg-quaternary-dark: $indigo40;
 
 $color-shadow: $coffee20;
 $color-cancel-btn: $coffee40;
-
 
 // Inbot colors
 $inbot-white: #ffffff;

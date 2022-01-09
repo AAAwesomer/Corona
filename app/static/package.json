@@ -125,6 +125,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.18.0",
     "file-loader": "^6.2.0",
+    "fusioncharts": "^3.18.0",
     "moment": "^2.29.1",
     "react": "^16.14.0",
     "react-bootstrap": "^0.32.4",

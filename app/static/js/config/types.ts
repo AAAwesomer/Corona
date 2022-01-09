@@ -1,12 +1,12 @@
 export interface AppConfig {
-  inputSections: SectionConfig[]
+  restrictionSections: SectionConfig[]
 }
 
 export interface Coding {
   [key: number]: string;
 }
 
-export interface InputConfig {
+export interface RestrictionConfig {
   id: string;
   name: string;
   description: string;
@@ -16,5 +16,5 @@ export interface InputConfig {
 
 export interface SectionConfig {
   name: string;
-  inputs: InputConfig[];
+  restrictions: RestrictionConfig[];
 }
