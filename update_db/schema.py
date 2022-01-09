@@ -1,0 +1,46 @@
+import sqlalchemy
+
+region = {
+    'id': sqlalchemy.types.VARCHAR(length=7),
+    'name': sqlalchemy.types.VARCHAR(length=31),
+    'type': sqlalchemy.types.VARCHAR(length=5)
+}
+
+covid_full = {
+    'region_id': sqlalchemy.types.VARCHAR(length=7),
+    'date': sqlalchemy.types.DATE,
+    'c1_school_closing': sqlalchemy.types.SMALLINT,
+    'c1_flag': sqlalchemy.types.SMALLINT,
+    'c2_workplace_closing': sqlalchemy.types.SMALLINT,
+    'c2_flag': sqlalchemy.types.SMALLINT,
+    'c3_cancel_public_events': sqlalchemy.types.SMALLINT,
+    'c3_flag': sqlalchemy.types.SMALLINT,
+    'c4_restrictions_on_gatherings': sqlalchemy.types.SMALLINT,
+    'c4_flag': sqlalchemy.types.SMALLINT,
+    'c5_close_public_transport': sqlalchemy.types.SMALLINT,
+    'c5_flag': sqlalchemy.types.SMALLINT,
+    'c6_stay_at_home_requirements': sqlalchemy.types.SMALLINT,
+    'c6_flag': sqlalchemy.types.SMALLINT,
+    'c7_restrictions_on_internal_movement': sqlalchemy.types.SMALLINT,
+    'c7_flag': sqlalchemy.types.SMALLINT,
+    'c8_international_travel_controls': sqlalchemy.types.SMALLINT,
+    'e1_income_support': sqlalchemy.types.SMALLINT,
+    'e1_flag': sqlalchemy.types.SMALLINT,
+    'e2_debt_contract_relief': sqlalchemy.types.SMALLINT,
+    'e3_fiscal_measures': sqlalchemy.types.SMALLINT,
+    'e4_international_support': sqlalchemy.types.SMALLINT,
+    'h1_public_information_campaigns': sqlalchemy.types.SMALLINT,
+    'h1_flag': sqlalchemy.types.SMALLINT,
+    'h2_testing_policy': sqlalchemy.types.SMALLINT,
+    'h3_contact_tracing': sqlalchemy.types.SMALLINT,
+    'h4_emergency_investment_in_healthcare': sqlalchemy.types.SMALLINT,
+    'h5_investment_in_vaccines': sqlalchemy.types.SMALLINT,
+    'h6_facial_coverings': sqlalchemy.types.SMALLINT,
+    'h6_flag': sqlalchemy.types.SMALLINT,
+    'h7_vaccination_policy': sqlalchemy.types.SMALLINT,
+    'h7_flag': sqlalchemy.types.SMALLINT,
+    'h8_protection_of_elderly_people': sqlalchemy.types.SMALLINT,
+    'h8_flag': sqlalchemy.types.SMALLINT,
+    'confirmed_cases': sqlalchemy.types.INTEGER,
+    'confirmed_deaths': sqlalchemy.types.INTEGER,
+}
