@@ -13,8 +13,9 @@ export interface CountryDetails {
   restrictions: Restrictions;
 }
 
-export interface TSItem {
+export interface PredictionTSItem {
   date: string;
+  confirmed_cases: number;
 }
 
 export interface CountryTSItem {
@@ -23,9 +24,15 @@ export interface CountryTSItem {
   confirmed_deaths: number;
 }
 
-export interface Country {
+export interface CountryInfo {
   details: CountryDetails;
+  restrictions: Restrictions;
   timeseries: CountryTSItem[];
+}
+
+export interface PredictionResult {
+  message: string;
+  predictions: PredictionTSItem[];
 }
 
 export interface CountryDetails {
@@ -37,22 +44,38 @@ export interface CountryDetails {
   restrictions: Restrictions;
 }
 
-export const getCountry = (id: string): [Country | null, boolean] => {
-  const [country, setCountry] = useState<Country | null>(null);
+export interface CountryState {
+  details?: CountryDetails;
+  restrictions?: Restrictions;
+  predictions?: PredictionTSItem[];
+  timeseries?: CountryTSItem[];
+  loading: boolean;
+  setRestrictions: (restrictions: Restrictions) => void;
+  predict: () => void;
+}
+
+export const useCountry = (id: string): CountryState => {
+  const [details, setDetails] = useState<CountryDetails | undefined>();
+  const [restrictions, setRestrictions] = useState<Restrictions | undefined>();
+  const [predictions, setPredictions] = useState<
+    PredictionTSItem[] | undefined
+  >();
+  const [timeseries, setTimeseries] = useState<CountryTSItem[] | undefined>();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchCountry() {
       try {
         setLoading(true);
-        const country = await axios
+        const country: CountryInfo = await axios
           .get(`${BASE_URL}/${id}`)
           .then((response) => response.data);
         // console.log(json);
-        setCountry(country);
-      } catch (error) {
-        setLoading(false);
-      }
+        setDetails(country.details);
+        setRestrictions(country.restrictions);
+        setTimeseries(country.timeseries);
+      } catch (error) {}
+      setLoading(false);
     }
 
     if (id) {
@@ -60,5 +83,25 @@ export const getCountry = (id: string): [Country | null, boolean] => {
     }
   }, [id]);
 
-  return [country, loading];
+  // const setRestrictions = (restrictions: Restrictions) => setRestrictionsState(restrictions);
+
+  const predict = async () => {
+    try {
+      const predictionResult: PredictionResult = await axios
+        .get(`${BASE_URL}/${id}/predict`)
+        .then((response) => response.data);
+      // console.log(json);
+      setPredictions(predictionResult.predictions);
+    } catch (error) {}
+  };
+
+  return {
+    details,
+    restrictions,
+    timeseries,
+    predictions,
+    loading,
+    setRestrictions,
+    predict,
+  };
 };

@@ -31,15 +31,15 @@ def get_countries():
         conn.close()
 
 
-def get_country_details(country_id):
+def get_country_info(country_id):
     conn = create_connection()
     try:
         with conn.cursor() as cursor:
             cursor.execute(sql.get_country_details, country_id)
             details = cursor.fetchone()
-            details["restrictions"] = {key: details.pop(key) for key
-                                       in Restrictions.get_attrs()}
-            return details
+            restrictions = {key: details.pop(key) for key
+                            in Restrictions.get_attrs()}
+            return details, restrictions
     finally:
         conn.close()
 

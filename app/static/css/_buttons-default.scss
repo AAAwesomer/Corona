@@ -282,3 +282,12 @@
     border: 1px solid $color-font-primary-light;
   }
 }
+
+.btn-predict {
+  color: white;
+  background: #148FFB;
+  border: 0px;
+  border-radius: $spacer-1;
+  padding: $spacer-1;
+  box-shadow: 0px 2px 2px 0px $color-shadow;
+}

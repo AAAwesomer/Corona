@@ -4,28 +4,31 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Restrictions } from 'lib/restrictions';
-import { Country, getCountry } from 'lib/country';
+import { useCountry, CountryState } from 'lib/country';
 import RestrictionController from 'components/RestrictionController';
+import CoronaGraph from 'components/CoronaGraph';
 
 const CountryPage: React.FC<any> = () => {
   let { id } = useParams();
 
-  const [restrictions, setRestrictions] = useState<Restrictions | null>(null);
-  const [country, loading] = getCountry(id);
-
-  useEffect(() => {
-    console.log(country?.details);
-    if (country) setRestrictions(country.details.restrictions);
-  }, [country]);
+  const {
+    details,
+    restrictions,
+    timeseries,
+    predictions,
+    loading,
+    setRestrictions,
+    predict,
+  }: CountryState = useCountry(id);
 
   const handleRestrictionChange = (restrictionId: string, value: number) => {
     setRestrictions({ ...restrictions!, [restrictionId]: value });
   };
 
-  const renderDetails = (country: Country) => {
-    const { name, date, confirmed_cases, confirmed_deaths } = country.details;
+  const renderDetails = () => {
+    const { name, date, confirmed_cases, confirmed_deaths } = details!;
     return (
-      <div className="country-details card">
+      <div className="country-details padding-4 column-item card">
         <div className="header">
           <h1>{name}</h1>
           <span className="date">Updated: {date}</span>
@@ -46,7 +49,15 @@ const CountryPage: React.FC<any> = () => {
 
   return (
     <main>
-      {country && renderDetails(country)}
+      {details && timeseries && (
+        <>
+          {renderDetails()}
+          <CoronaGraph data={timeseries!} predictions={predictions || undefined} />
+          <button className="btn-predict column-item" onClick={predict}>
+            Predict
+          </button>
+        </>
+      )}
       {restrictions && (
         <RestrictionController
           restrictions={restrictions}

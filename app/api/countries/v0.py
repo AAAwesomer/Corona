@@ -17,9 +17,11 @@ def countries() -> Response:
 
 @countries_bp.route('/<country_id>', methods=['GET'])
 def country(country_id) -> Response:
-    details = db.get_country_details(country_id)
+    details, restrictions = db.get_country_info(country_id)
     timeseries = db.get_country_timeseries(country_id)
-    return make_response(jsonify({"details": details, "timeseries": timeseries}))
+    return make_response(jsonify({"details": details,
+                                  "restrictions": restrictions,
+                                  "timeseries": timeseries}))
 
 
 @countries_bp.route('/<country_id>/predict', methods=['GET'])  #TODO: CHANGE TO POST
