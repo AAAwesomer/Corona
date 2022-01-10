@@ -5,7 +5,7 @@ import logging
 import pymysql
 from flask import current_app as app
 from app.db import sql
-from app.models.restrictions import Restrictions
+from app.models.restrictions import RestrictionsSchema
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ def get_country_info(country_id):
             cursor.execute(sql.get_country_details, country_id)
             details = cursor.fetchone()
             restrictions = {key: details.pop(key) for key
-                            in Restrictions.get_attrs()}
+                            in RestrictionsSchema().fields.keys()}
             return details, restrictions
     finally:
         conn.close()

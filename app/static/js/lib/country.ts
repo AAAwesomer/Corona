@@ -88,7 +88,10 @@ export const useCountry = (id: string): CountryState => {
   const predict = async () => {
     try {
       const predictionResult: PredictionResult = await axios
-        .get(`${BASE_URL}/${id}/predict`)
+        .post(`${BASE_URL}/${id}/predict`, {
+          date: details?.date,
+          restrictions: restrictions,
+        })
         .then((response) => response.data);
       // console.log(json);
       setPredictions(predictionResult.predictions);

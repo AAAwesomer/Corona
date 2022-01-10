@@ -2,7 +2,8 @@ import logging
 import datetime
 from flask import Response, request, jsonify, make_response
 from flask.blueprints import Blueprint
-from app.models.restrictions import Restrictions
+from marshmallow.exceptions import ValidationError
+from app.models.predict_request import PredictRequestSchema
 from app.db import db
 
 LOGGER = logging.getLogger(__name__)
@@ -24,35 +25,18 @@ def country(country_id) -> Response:
                                   "timeseries": timeseries}))
 
 
-@countries_bp.route('/<country_id>/predict', methods=['GET'])  #TODO: CHANGE TO POST
+@countries_bp.route('/<country_id>/predict', methods=['POST'])
 def predict(country_id) -> Response:
     """
     Parse the request arguments and call the helper method to execute a prospect company search
     :return: a Response created with the results from the helper method
     """
-    model_params = Restrictions.from_json({
-        "c1_school_closing": 0,
-        "c2_workplace_closing": 0,
-        "c3_cancel_public_events": 0,
-        "c4_restrictions_on_gatherings": 0,
-        "c5_close_public_transport": 0,
-        "c6_stay_at_home_requirements": 0,
-        "c7_restrictions_on_internal_movement": 0,
-        "c8_international_travel_controls": 0,
-        "e1_income_support": 0,
-        "e2_debt_contract_relief": 0,
-        "h1_public_information_campaigns": 0,
-        "h2_testing_policy": 0,
-        "h3_contact_tracing": 0,
-        "h6_facial_coverings": 0,
-        "h7_vaccination_policy": 0,
-        "h8_protection_of_elderly_people": 0,
-    })
-    # model_params = ModelParams.from_json(request.get_json())
-    LOGGER.info(model_params)
-    # model = get_model()
-    # processed_input = process_input(model_params)
-    # prediction = make_prediction(model, processed_input)
+    request_json = request.get_json()
+    print(list(PredictRequestSchema().fields.keys()))
+    try:
+        PredictRequestSchema().load(request_json)
+    except ValidationError as e:
+        return make_response(jsonify(e.messages), 400)
     return make_response(jsonify({'message': 'success',
                                   'predictions': test_predictions()}))
 
