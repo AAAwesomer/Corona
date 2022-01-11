@@ -10,7 +10,6 @@ import schema
 from log import init_logging
 from db import get_engine
 
-
 LOGGER = init_logging(__name__)
 ENGINE = get_engine()
 CHUNK_SIZE = int(os.environ.get('CHUNK_SIZE', '50000'))
