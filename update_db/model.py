@@ -86,6 +86,10 @@ def prepare_train_data(input):
     return lgb.Dataset(X, y)
 
 
+def load_train_data(filename):
+    return lgb.Dataset(filename)
+
+
 def train_model(train_data: lgb.Dataset):
     return lgb.train(constants.MODEL_PARAMS, train_data)
 
