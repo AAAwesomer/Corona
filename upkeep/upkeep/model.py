@@ -2,10 +2,12 @@ import lightgbm as lgb
 import random
 import numpy as np
 import pandas as pd
-import constants
 
-assert (not constants.N_PREDICTION_DAYS % constants.N_BUCKETS,
-        "# of buckets does not divide # of prediction days")
+from . import constants
+
+assert not constants.N_PREDICTION_DAYS % constants.N_BUCKETS, (
+    "# of buckets does not divide # of prediction days"
+)
 
 COL_REGION = "region_id"
 COL_PREDICTION = "prediction"

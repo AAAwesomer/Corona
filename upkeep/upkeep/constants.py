@@ -5,7 +5,7 @@ MODEL_NUM_ROUNDS = 10
 MODEL_PARAMS = {
     "boosting_type": "gbdt",
     "objective": "regression",
-    "device_type": "gpu",
+    "device_type": "cpu",
     "metric": {"l2", "l1", "mape"},
     "num_leaves": 8,
     "learning_rate": 0.002,
@@ -14,6 +14,11 @@ MODEL_PARAMS = {
     "bagging_freq": 15,
     "verbose": 1
 }
+
+COVID_FILE = "../data/covid_full.csv"
+INPUT_FILE = "../data/confirmed_cases_input.csv"
+TRAIN_DATA_FILE = "../data/train_data.bin"
+MODEL_FILE = "../data/model.txt"
 
 DATA_FILE_URL = "https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/OxCGRT_latest.csv"
 

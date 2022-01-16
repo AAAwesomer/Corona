@@ -4,37 +4,33 @@ import pandas as pd
 from dotenv import load_dotenv
 load_dotenv("../.env")
 
-from db import get_engine
-import model
-
-COVID_FILE = "../data/covid_full.csv"
-INPUT_FILE = "../data/confirmed_cases_input.csv"
-TRAIN_DATA_FILE = "../data/train_data.bin"
-MODEL_FILE = "../data/model.txt"
+from upkeep.db import get_engine
+import upkeep.model as model
+import upkeep.constants as constants
 
 
 def get_covid_full():
     engine = get_engine()
     df = pd.read_sql("SELECT * FROM covid_full", con=engine)
-    df.to_csv(COVID_FILE, index=False)    
+    df.to_csv(constants.COVID_FILE, index=False)
 
 
 def get_input():
-    df = pd.read_csv(COVID_FILE)
+    df = pd.read_csv(constants.COVID_FILE)
     confirmed_cases_input = model.preprocess_confirmed_cases_input(df)
-    confirmed_cases_input.to_csv(INPUT_FILE, index=False)
+    confirmed_cases_input.to_csv(constants.INPUT_FILE, index=False)
 
 
 def get_train_data():
-    df = pd.read_csv(INPUT_FILE)
+    df = pd.read_csv(constants.INPUT_FILE)
     train_data = model.prepare_train_data(df)
-    train_data.save_binary(TRAIN_DATA_FILE)
+    train_data.save_binary(constants.TRAIN_DATA_FILE)
 
 
 def get_model():
-    train_data = model.load_train_data(TRAIN_DATA_FILE)
+    train_data = model.load_train_data(constants.TRAIN_DATA_FILE)
     bst = model.train_model(train_data)
-    bst.save_model(MODEL_FILE)
+    bst.save_model(constants.MODEL_FILE)
 
 
 def get_all():

@@ -1,17 +1,15 @@
 import os
 import re
+import logging
 import pandas as pd
 from pandas.core.frame import DataFrame
 from dotenv import load_dotenv
 load_dotenv('../.env')
 
-import constants
-import schema
-from log import init_logging
-from db import get_engine
+from . import constants, schema, db
 
-LOGGER = init_logging(__name__)
-ENGINE = get_engine()
+LOGGER = logging.getLogger(__name__)
+ENGINE = db.get_engine()
 CHUNK_SIZE = int(os.environ.get('CHUNK_SIZE', '50000'))
 
 
@@ -46,6 +44,7 @@ def process(data: DataFrame):
     data = data.rename(columns=map_column_name)
     data.loc[:, 'region_id'], data.loc[:, 'region_name'] = zip(*data.apply(get_region_id_and_name, axis=1))
     data['date'] = pd.to_datetime(data['date'].astype(str))
+    data = data.query(" & ".join([f"{column} < 10" for column in constants.INPUT_COLUMNS]))
     return data
 
 
@@ -69,14 +68,16 @@ def publish_table(name: str, table: DataFrame, **kwargs):
     table.to_sql(name=name, con=ENGINE, if_exists='replace', index=False, **kwargs)
 
 
-def update_db():
+def pipeline():
+    """Updates the database with the latest data from the oxford dataset.
+    Returns the updated tables.
+    """
     LOGGER.info('Collecting data')
     data = collect_data()
     LOGGER.info('Processing data')
     processed_data = process(data)
-    publish_table('region', get_region_table(processed_data), dtype=schema.region)
-    publish_table('covid_full', get_covid_full_table(processed_data), dtype=schema.covid_full)
-
-
-if __name__ == "__main__":
-    update_db()
+    region = get_region_table(processed_data)
+    covid_full = get_covid_full_table(processed_data)
+    publish_table('region', region, dtype=schema.region)
+    publish_table('covid_full', covid_full, dtype=schema.covid_full)
+    return region, covid_full
