@@ -1,0 +1,35 @@
+# Duplicate this file and put your customization here
+
+##
+## Common settings for The Covid Model
+##
+
+## NOTE - README table was generated with https://github.com/norwoodj/helm-docs
+
+##
+## nodeSelector -- The Covid Model-wide configuration of nodeSelector. [ref](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector)
+##
+nodeSelector: {}
+##
+## affinity -- The Covid Model-wide configuration of affinity. [ref](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
+##
+affinity: {}
+##
+## tolerations -- The Covid Model-wide configuration of tolerations. [ref](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#taints-and-tolerations-beta-feature)
+##
+tolerations: []
+##
+## podAnnotations -- The Covid Model-wide configuration of podAnnotations. [ref](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/)
+##
+podAnnotations: {}
+
+MYSQL_HOST:
+MYSQL_PORT:
+MYSQL_USER:
+MYSQL_PASSWORD:
+MYSQL_DB:
+
+upkeep:
+  image: europe-north1-docker.pkg.dev/the-covid-model/covid-registry/upkeep
+  imageTag: v1
+  name: upkeep

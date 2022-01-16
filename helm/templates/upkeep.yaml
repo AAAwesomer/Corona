@@ -1,0 +1,43 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "covid.name" . }}-{{ .Values.upkeep.name }}
+  labels:
+    app: {{ template "covid.name" . }}
+    run: {{ .Chart.Name }}-{{ .Values.upkeep.name }}
+    component: {{ .Values.upkeep.name }}
+    chart: {{ template "covid.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  schedule: "0 0 * * *"  # Daily at 2/3am Helsinki time
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: sa-keyfile
+            secret:
+              secretName: covid-app-sa-keyfile
+          containers:
+          - name: {{ .Chart.Name }}-{{ .Values.upkeep.name }}
+            image: {{ .Values.upkeep.image }}:{{ .Values.upkeep.imageTag }}
+            imagePullPolicy: Always
+            volumeMounts:
+            - name: sa-keyfile
+              mountPath: /data
+            env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /data/keyfile.json
+            - name: MYSQL_HOST
+              value: {{ .Values.MYSQL_HOST | quote }}
+            - name: MYSQL_PORT
+              value: {{ .Values.MYSQL_PORT | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.MYSQL_USER | quote }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.MYSQL_PASSWORD | quote }}
+            - name: MYSQL_DB
+              value: {{ .Values.MYSQL_DB | quote }}
+          restartPolicy: OnFailure
