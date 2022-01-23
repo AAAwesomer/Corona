@@ -9,7 +9,8 @@ import upkeep.model as model
 from log import init_logging
 
 LOGGER = init_logging(__name__)
-BUCKET = "thecovidmodel"
+BUCKET = os.environ.get("BUCKET", "thecovidmodel")
+MODEL_BLOB = os.environ.get("MODEL_BLOB", "model.txt")
 FUNCTIONS = None
 
 
@@ -37,7 +38,7 @@ def upkeep():
     LOGGER.info("Training model")
     bst = model.train(covid_full)
     LOGGER.info("Storing model in cloud storage")
-    upload_model(bst, BUCKET, "model.txt")
+    upload_model(bst, BUCKET, MODEL_BLOB)
 
 
 def parse_args():
@@ -60,4 +61,3 @@ if __name__ == "__main__":
     }
     main()
     LOGGER.info("Finished.")
-    # upload_covid_full()
