@@ -40,4 +40,8 @@ spec:
               value: {{ .Values.MYSQL_PASSWORD | quote }}
             - name: MYSQL_DB
               value: {{ .Values.MYSQL_DB | quote }}
+            - name: BUCKET
+              value: {{ .Values.BUCKET | quote }}
+            - name: MODEL_BLOB
+              value: {{ .Values.MODEL_BLOB | quote }}
           restartPolicy: OnFailure

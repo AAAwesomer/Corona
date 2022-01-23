@@ -29,7 +29,16 @@ MYSQL_USER:
 MYSQL_PASSWORD:
 MYSQL_DB:
 
+BUCKET:
+MODEL_BLOB:
+
 upkeep:
   image: europe-north1-docker.pkg.dev/the-covid-model/covid-registry/upkeep
   imageTag: v1
   name: upkeep
+
+app:
+  image: europe-north1-docker.pkg.dev/the-covid-model/covid-registry/app
+  imageTag: v1
+  name: app
+  serviceType: NodePort

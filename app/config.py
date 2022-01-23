@@ -61,3 +61,6 @@ class LocalConfig(Config):
     MYSQL_USER=os.environ.get('MYSQL_USER')
     MYSQL_PASSWORD=os.environ.get('MYSQL_PASSWORD')
     MYSQL_DB=os.environ.get('MYSQL_DB')
+
+    BUCKET = os.environ.get("BUCKET", "thecovidmodel")
+    MODEL_BLOB = os.environ.get("MODEL_BLOB", "model.txt")

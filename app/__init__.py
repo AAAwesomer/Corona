@@ -6,7 +6,7 @@ import logging
 import logging.config
 import os
 
-from flask import Flask, Blueprint
+from flask import Flask
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 

@@ -7,3 +7,5 @@ __pycache__/
 jest
 .DS_Store
 .env
+.env-docker.env
+vol/

@@ -61,5 +61,15 @@ get_country_timeseries = """
     FROM covid_full
     WHERE region_id = %s
       AND confirmed_cases IS NOT NULL
-      AND date < DATE_SUB(CURDATE(), INTERVAL 2 DAY);
+      AND date < DATE_SUB(CURDATE(), INTERVAL 2 DAY)
+"""
+
+get_country_recent_cases = """
+    SELECT
+      DATE_FORMAT(date, "%%Y-%%m-%%d") AS date,
+      coalesce(confirmed_cases, 0) AS confirmed_cases
+    FROM covid_full
+    WHERE region_id = %s
+      AND date <= %s
+      AND date > DATE_SUB(%s, INTERVAL 7 DAY)
 """

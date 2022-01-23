@@ -4,6 +4,7 @@ from flask import Response, request, jsonify, make_response
 from flask.blueprints import Blueprint
 from marshmallow.exceptions import ValidationError
 from app.models.predict_request import PredictRequestSchema
+from app.utils import model
 from app.db import db
 
 LOGGER = logging.getLogger(__name__)
@@ -32,25 +33,13 @@ def predict(country_id) -> Response:
     :return: a Response created with the results from the helper method
     """
     request_json = request.get_json()
-    print(list(PredictRequestSchema().fields.keys()))
     try:
         PredictRequestSchema().load(request_json)
     except ValidationError as e:
         return make_response(jsonify(e.messages), 400)
+    predictions = model.predict(country_id, **request_json)
     return make_response(jsonify({'message': 'success',
-                                  'predictions': test_predictions()}))
-
-
-def get_model():
-    return
-
-
-def process_input(model_params):
-    return
-
-
-def make_prediction(model, processed_input):
-    return
+                                  'predictions': predictions}))
 
 
 def test_predictions():

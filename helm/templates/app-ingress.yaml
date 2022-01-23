@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "covid.name" . }}-{{ .Values.app.name }}
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: covid-static-ip
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    kubernetes.io/ingress.class: "gce"
+  labels:
+    app: {{ template "covid.name" . }}
+spec:
+  tls:
+  - hosts:
+    - thecovidmodel.com
+    secretName: thecovidmodel-tls-secret
+  rules:
+  - host: thecovidmodel.com
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ template "covid.name" . }}-{{ .Values.app.name }}
+            port:
+              number: 1919

@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "covid.name" . }}-{{ .Values.app.name }}
+  labels:
+    app: {{ template "covid.name" . }}
+    component: {{ .Values.app.name }}
+    chart: {{ template "covid.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "covid.name" . }}
+      component: {{ .Values.app.name }}
+      release: {{ .Release.Name }}
+  replicas: {{ default 1 .Values.app.replicas }}
+  template:
+    metadata:
+      {{- with default .Values.podAnnotations .Values.app.podAnnotations }}
+      annotations:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      labels:
+        app: {{ template "covid.name" . }}
+        component: {{ .Values.app.name }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: sa-keyfile
+        secret:
+          secretName: covid-app-sa-keyfile
+      containers:
+      - name: {{ .Chart.Name }}-{{ .Values.app.name }}
+        image: {{ .Values.app.image }}:{{ .Values.app.imageTag }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1919
+        volumeMounts:
+        - name: sa-keyfile
+          mountPath: /data
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /data/keyfile.json
+        - name: MYSQL_HOST
+          value: {{ .Values.MYSQL_HOST | quote }}
+        - name: MYSQL_PORT
+          value: {{ .Values.MYSQL_PORT | quote }}
+        - name: MYSQL_USER
+          value: {{ .Values.MYSQL_USER | quote }}
+        - name: MYSQL_PASSWORD
+          value: {{ .Values.MYSQL_PASSWORD | quote }}
+        - name: MYSQL_DB
+          value: {{ .Values.MYSQL_DB | quote }}
+        - name: BUCKET
+          value: {{ .Values.BUCKET | quote }}
+        - name: MODEL_BLOB
+          value: {{ .Values.MODEL_BLOB | quote }}
+        command: ["gunicorn"]
+        args: ['-w', '4', '--bind', ':1919', 'app.wsgi']
+        readinessProbe:
+          httpGet:
+            path: "/healthcheck"
+            port: 1919
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: "/healthcheck"
+            port: 1919
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 5

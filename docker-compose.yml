@@ -4,15 +4,16 @@ services:
     build:
       context: .
       dockerfile: hotreload.Dockerfile
-    container_name: corona
+    container_name: corona-hotreload
     volumes:
+      - ./vol:/data
       - ./app/static:/app/static
     ports:
       - 1919:1919
     networks:
       - corona
     env_file:
-      - .env
+      - .env-docker.env
 
 networks:
   corona:

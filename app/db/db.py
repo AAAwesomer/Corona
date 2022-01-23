@@ -52,3 +52,13 @@ def get_country_timeseries(country_id):
             return cursor.fetchall()
     finally:
         conn.close()
+
+
+def get_country_recent_cases(country_id, date):
+    conn = create_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(sql.get_country_recent_cases, (country_id, date, date))
+            return cursor.fetchall()
+    finally:
+        conn.close()
