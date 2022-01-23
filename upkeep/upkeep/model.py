@@ -2,6 +2,7 @@ import lightgbm as lgb
 import random
 import numpy as np
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 from . import constants
 
@@ -82,22 +83,46 @@ def preprocess_confirmed_cases_input(data):
     return inputdf.dropna().reset_index(drop=True)
 
 
-def prepare_train_data(input):
+def x_y(input):
     X = input[constants.INPUT_COLUMNS + get_cases_column_names() + [COL_WINDOW]]
     y = input[COL_PREDICTION]
-    return lgb.Dataset(X, y)
+    return X, y
+
+
+def prepare_train_data(input):
+    return lgb.Dataset(*x_y(input))
+
+
+def prepare_train_and_eval(input):
+    X_train, X_test, y_train, y_test = train_test_split(
+        *x_y(input), test_size = 0.2, random_state=42, shuffle=False)
+    print(X_test)
+    lgb_train = lgb.Dataset(X_train, y_train)
+    lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)
+    return lgb_train, lgb_eval
 
 
 def load_train_data(filename):
     return lgb.Dataset(filename)
 
 
-def train_model(train_data: lgb.Dataset):
-    return lgb.train(constants.MODEL_PARAMS, train_data)
+def train_model(train_data: lgb.Dataset, params=None, eval_data=None,
+                num_boost_round=constants.MODEL_NUM_ROUNDS):
+    params = params or constants.MODEL_PARAMS
+    callbacks = [lgb.early_stopping(stopping_rounds=200)] if eval_data else None
+    return lgb.train(params,
+                     train_data,
+                     num_boost_round=num_boost_round,
+                     valid_sets=eval_data,
+                     callbacks=callbacks)
 
 
 def train(data):
     confirmed_cases_input = preprocess_confirmed_cases_input(data)
     train_data = prepare_train_data(confirmed_cases_input)
-    return lgb.train(constants.MODEL_PARAMS, train_data,
-                      num_boost_round=constants.MODEL_NUM_ROUNDS)
+    return train_model(train_data)
+
+
+def train_with_eval(input, **kwargs):
+    lgb_train, lgb_eval = prepare_train_and_eval(input)
+    return train_model(lgb_train, eval_data=lgb_eval, **kwargs)

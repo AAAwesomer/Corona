@@ -1,7 +1,7 @@
 N_PREDICTION_DAYS = 90
 N_BUCKETS = 9
 N_INPUT_DAYS = 7
-MODEL_NUM_ROUNDS = 10
+MODEL_NUM_ROUNDS = 915
 MODEL_PARAMS = {
     "boosting_type": "gbdt",
     "objective": "regression",
