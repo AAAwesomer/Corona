@@ -44,6 +44,7 @@ def process(data: DataFrame):
     data = data.rename(columns=map_column_name)
     data.loc[:, 'region_id'], data.loc[:, 'region_name'] = zip(*data.apply(get_region_id_and_name, axis=1))
     data['date'] = pd.to_datetime(data['date'].astype(str))
+    data.loc[:, constants.INPUT_COLUMNS] = data.loc[:, constants.INPUT_COLUMNS].fillna(0)
     data = data.query(" & ".join([f"{column} < 10" for column in constants.INPUT_COLUMNS]))
     return data
 
@@ -57,10 +58,10 @@ def get_region_table(data: DataFrame):
 
 
 def get_covid_full_table(data: DataFrame):
-    covid_data = data.drop(columns=['country_name', 'country_code', 'region_name', 'region_code', 'jurisdiction'])
-    region_id_col = covid_data.pop("region_id")
-    covid_data.insert(0, region_id_col.name, region_id_col)
-    return covid_data
+    covid_full = data.drop(columns=['country_name', 'country_code', 'region_name', 'region_code', 'jurisdiction'])
+    region_id_col = covid_full.pop("region_id")
+    covid_full.insert(0, region_id_col.name, region_id_col)
+    return covid_full
 
 
 def publish_table(name: str, table: DataFrame, **kwargs):
